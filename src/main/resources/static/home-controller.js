@@ -13,9 +13,9 @@ myApp
 
 							$scope.url = "http://www.bloomberg.com/quote/SPX:IND";
 
-							$scope.tokerns = "div.price";
+							$scope.tokerns = "div.price,div.ticker";
 
-							$scope.cmModel = "{ \n \"name\" : \"Aditya\",\n \"price\":\"1234\"\n }";
+							$scope.cmModel = "{ \n \"name\" : \"div.ticker\",\n \"price\":\"div.price\"\n }";
 
 							$scope.editorOptions = {
 								lineNumbers : true,

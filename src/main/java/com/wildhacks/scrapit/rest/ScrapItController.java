@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,40 +35,36 @@ public class ScrapItController {
 	@Autowired
 	private ScrapRepository scrapRepository;
 
-	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.POST)
-	public final Schema scrap(@RequestParam("tokens") String tokens, @RequestParam("url") String url,
+	public final void scrap(@RequestParam("tokens") String tokens, @RequestParam("url") String url,
 			@RequestBody String schema) throws JsonParseException, JsonMappingException, IOException {
 
 		this.saveScrap(tokens, url, schema);
-		ArrayList<String> sel = new ArrayList<String>();
-
-		Response r = new Response();
-		Schema s = new Schema();
-		System.out.println(tokens);
-
-		System.out.println(schema);
-
-		ObjectMapper mapper = new ObjectMapper();
-		Map<String, String> parsed = mapper.readValue(schema, new TypeReference<Map<String, String>>() {
-		});
-
-		for (Entry<String, String> E : parsed.entrySet()) {
-			s.setDynamicProperty(E.getKey().toString(), E.getValue().toString());
-			System.out.println(E.getKey() + "   " + E.getValue());
-
-		}
-		String[] tokensStr = tokens.split(",");
-		for (String str : tokensStr) {
-			sel.add(str);
-		}
-
-		scrapItEngine.scrap(url, sel);
-		return s;
+		/*
+		 * ArrayList<String> sel = new ArrayList<String>();
+		 * 
+		 * Response r = new Response(); Schema s = new Schema();
+		 * System.out.println(tokens);
+		 * 
+		 * System.out.println(schema);
+		 * 
+		 * ObjectMapper mapper = new ObjectMapper(); Map<String, String> parsed =
+		 * mapper.readValue(schema, new TypeReference<Map<String, String>>() { });
+		 * 
+		 * for (Entry<String, String> E : parsed.entrySet()) {
+		 * s.setDynamicProperty(E.getKey().toString(), E.getValue().toString());
+		 * System.out.println(E.getKey() + "   " + E.getValue());
+		 * 
+		 * } String[] tokensStr = tokens.split(","); for (String str : tokensStr) {
+		 * sel.add(str); }
+		 * 
+		 * scrapItEngine.scrap(url, sel);
+		 */
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
-	public final Schema scrap(@PathParam("id") String id) throws JsonParseException, JsonMappingException, IOException {
+	public final Schema scrap(@PathVariable("id") String id)
+			throws JsonParseException, JsonMappingException, IOException {
 
 		Schema s = new Schema();
 		ObjectMapper mapper = new ObjectMapper();
@@ -82,8 +77,9 @@ public class ScrapItController {
 		});
 
 		for (Entry<String, String> E : schemaMap.entrySet()) {
-			String val = selectorMap.get(E.getKey());
-			schemaMap.put(E.getKey(), val);
+			String val = selectorMap.get(E.getValue());
+			if (val != null)
+				schemaMap.put(E.getKey(), val);
 		}
 
 		for (Entry<String, String> E : schemaMap.entrySet()) {
