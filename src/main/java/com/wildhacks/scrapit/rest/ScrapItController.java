@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wildhacks.scrapit.ScrapItEngine;
-import com.wildhacks.scrapit.data.Response;
 import com.wildhacks.scrapit.data.Schema;
 import com.wildhacks.scrapit.data.ScrapManger;
 import com.wildhacks.scrapit.repo.ScrapRepository;
@@ -29,37 +29,33 @@ import com.wildhacks.scrapit.repo.ScrapRepository;
 @RequestMapping("api/scrapit")
 public class ScrapItController {
 
+	final static String base = "http://localhost:8080/api/scrapit/";
+
 	@Autowired
 	private ScrapItEngine scrapItEngine;
 
 	@Autowired
 	private ScrapRepository scrapRepository;
 
+	@RequestMapping(method = RequestMethod.GET, value = "/history")
+	public final ArrayList<String> history() {
+		ArrayList<String> urls = new ArrayList<String>();
+		List<ScrapManger> history = scrapRepository.findAll();
+
+		for (ScrapManger scrapManger : history) {
+			urls.add(base + scrapManger.getName());
+		}
+
+		return urls;
+
+	}
+
 	@RequestMapping(method = RequestMethod.POST)
 	public final void scrap(@RequestParam("tokens") String tokens, @RequestParam("url") String url,
 			@RequestBody String schema) throws JsonParseException, JsonMappingException, IOException {
 
 		this.saveScrap(tokens, url, schema);
-		/*
-		 * ArrayList<String> sel = new ArrayList<String>();
-		 * 
-		 * Response r = new Response(); Schema s = new Schema();
-		 * System.out.println(tokens);
-		 * 
-		 * System.out.println(schema);
-		 * 
-		 * ObjectMapper mapper = new ObjectMapper(); Map<String, String> parsed =
-		 * mapper.readValue(schema, new TypeReference<Map<String, String>>() { });
-		 * 
-		 * for (Entry<String, String> E : parsed.entrySet()) {
-		 * s.setDynamicProperty(E.getKey().toString(), E.getValue().toString());
-		 * System.out.println(E.getKey() + "   " + E.getValue());
-		 * 
-		 * } String[] tokensStr = tokens.split(","); for (String str : tokensStr) {
-		 * sel.add(str); }
-		 * 
-		 * scrapItEngine.scrap(url, sel);
-		 */
+
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
@@ -91,10 +87,13 @@ public class ScrapItController {
 	}
 
 	private void saveScrap(String tokens, String url, String schema) {
+
+		UUID uuid = UUID.randomUUID();
+		String randomUUIDString = uuid.toString();
 		ScrapManger sm = new ScrapManger();
 		sm.setTokens(getTokenArray(tokens));
 		sm.setSchema(schema);
-		sm.setName("abc");
+		sm.setName(randomUUIDString);
 		sm.setUrl(url);
 		scrapRepository.save(sm);
 	}

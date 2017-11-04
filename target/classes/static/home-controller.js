@@ -29,15 +29,38 @@ myApp
 							};
 
 							$scope.scraptit = function() {
-								$http.post(
-										'api/scrapit?tokens=' + $scope.tokerns
-												+ '&url=' + $scope.url,
-										$scope.cmModel, {}).then(
-										function(response) {
-											// / / success callback
-										}, function(response) {
-											// / / failure callback
-										});
+								$http
+										.post(
+												'api/scrapit?tokens='
+														+ $scope.tokerns
+														+ '&url=' + $scope.url,
+												$scope.cmModel, {})
+										.then(
+												function(response) {
+
+													var modalInstance = $uibModal
+															.open({
+																templateUrl : 'apikey-modal.html',
+																resolve : {
+																	user : function() {
+																		return $scope.profile;
+																	}
+																}
+															});
+
+													modalInstance.result
+															.then(
+																	function(
+																			selectedItem) {
+
+																	},
+																	function() {
+
+																	});
+
+												}, function(response) {
+													// / / failure callback
+												});
 							}
 
 						}
