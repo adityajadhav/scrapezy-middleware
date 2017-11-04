@@ -1,3 +1,4 @@
+package com.wildhacks.scrapit.test;
 import java.io.IOException;
 
 import org.jsoup.Jsoup;
