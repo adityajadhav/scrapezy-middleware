@@ -15,7 +15,7 @@ myApp
 
 							$scope.tokerns = "div.price,div.ticker";
 
-							$scope.cmModel = "{ \n \"name\" : \"div.ticker\",\n \"price\":\"div.price\"\n }";
+							$scope.cmModel = "{ \n \"name\" : \"div.ticker\",\n \"price\": \"div.price\"\n}";
 
 							$scope.editorOptions = {
 								lineNumbers : true,

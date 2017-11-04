@@ -1,13 +1,36 @@
 <div class="container" ng-controller="HomeCtrl" ng-cloak
 	class="ng-cloak">
-	<h1>{{title}}</h1>
-	
-	
+
+
+
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand active" href="#">{{title}}</a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<!-- <li class="active"><a href="#">Home</a></li> -->
+					<!--  <li><a href="#">Page 1</a></li>
+        <li><a href="#">Page 2</a></li> 
+        <li><a href="#">Page 3</a></li>  -->
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" ng-click="settings()"><span
+							class="glyphicon glyphicon-user"></span> Profile</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+							Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
 	<style>
 .CodeMirror {
 	/* Set height, width, borders, and global font properties here */
 	font-family: monospace;
-	height: 100px;
+	height: 240px;
 }
 </style>
 
@@ -18,7 +41,9 @@
 
 		<div class="col-md-8">
 			<div class="panel panel-default">
-				<div class="panel-heading">Define URL</div>
+				<div class="panel-heading">
+					<b>1. Define URL</b>
+				</div>
 				<div class="panel-body">
 					<div class="form-group">
 						<label for="usr">URL:</label> <input type="text"
@@ -29,7 +54,9 @@
 			</div>
 
 			<div class="panel panel-default">
-				<div class="panel-heading">Define Tokens</div>
+				<div class="panel-heading">
+					<b>2. Define Tokens</b>
+				</div>
 				<div class="panel-body">
 					<div class="form-group">
 						<label for="usr">Tokens:</label> <input type="text"
@@ -39,19 +66,24 @@
 				</div>
 			</div>
 
+
+			<button type="button" ng-click="scraptit()" class="btn btn-primary">Scrap
+				it</button>
+		</div>
+
+		<div class="col-md-4">
 			<div class="panel panel-default">
-				<div class="panel-heading">Define Schema</div>
+				<div class="panel-heading">
+					<b>3. Define Schema</b>
+				</div>
 				<div class="panel-body">
 					<ui-codemirror ui-codemirror-opts="editorOptions"
 						ng-model="cmModel"></ui-codemirror>
 				</div>
 			</div>
 
-			<button type="button" ng-click="scraptit()" class="btn btn-primary">Scrap
-				it</button>
-		</div>
 
-		<div class="col-md-4"></div>
+		</div>
 	</div>
 
 </div>
