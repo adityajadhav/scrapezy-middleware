@@ -1,7 +1,7 @@
 'use strict';
 
 var myApp = angular.module('myApp',
-		[ 'ui.router', 'chart.js', 'ngResource', 'ui.bootstrap' ])
+		[ 'ui.router', 'chart.js', 'ngResource', 'ui.bootstrap','ui.codemirror' ])
 
 .config(function($stateProvider, $locationProvider) {
 	$stateProvider.state({

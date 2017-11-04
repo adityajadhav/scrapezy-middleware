@@ -6,7 +6,7 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 
 public class Schema {
-
+	
 	private Map<String, String> props = new HashMap<String, String>();
 
 	@JsonAnySetter
