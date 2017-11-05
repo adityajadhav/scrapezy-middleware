@@ -2,6 +2,7 @@ package com.wildhacks.scrapit.data;
 
 public class Response {
 
+	private String base;
 	private String uri;
 	private String status;
 
@@ -19,6 +20,14 @@ public class Response {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getBase() {
+		return base;
+	}
+
+	public void setBase(String base) {
+		this.base = base;
 	}
 
 }

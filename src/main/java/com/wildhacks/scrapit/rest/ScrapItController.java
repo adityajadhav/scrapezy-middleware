@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wildhacks.scrapit.ScrapItEngine;
+import com.wildhacks.scrapit.data.Response;
 import com.wildhacks.scrapit.data.Schema;
 import com.wildhacks.scrapit.data.ScrapManger;
 import com.wildhacks.scrapit.repo.ScrapRepository;
@@ -51,11 +52,15 @@ public class ScrapItController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public final void scrap(@RequestParam("tokens") String tokens, @RequestParam("url") String url,
+	public final Response scrap(@RequestParam("tokens") String tokens, @RequestParam("url") String url,
 			@RequestBody String schema) throws JsonParseException, JsonMappingException, IOException {
-
-		this.saveScrap(tokens, url, schema);
-
+		String uri = "";
+		Response r = new Response();
+		ScrapManger sm = this.saveScrap(tokens, url, schema);
+		uri = base + sm.getName();
+		r.setUri(uri);
+		r.setBase(sm.getUrl());
+		return r;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
@@ -86,7 +91,7 @@ public class ScrapItController {
 		return s;
 	}
 
-	private void saveScrap(String tokens, String url, String schema) {
+	private ScrapManger saveScrap(String tokens, String url, String schema) {
 
 		UUID uuid = UUID.randomUUID();
 		String randomUUIDString = uuid.toString();
@@ -96,6 +101,7 @@ public class ScrapItController {
 		sm.setName(randomUUIDString);
 		sm.setUrl(url);
 		scrapRepository.save(sm);
+		return sm;
 	}
 
 	private ArrayList<String> getTokenArray(String tokens) {

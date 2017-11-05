@@ -19,7 +19,8 @@ public class ScrapItEngine {
 
 		for (String selector : selectors) {
 			Element ele = doc.select(selector).first();
-			map.put(selector, ele.html());
+			if (ele != null)
+				map.put(selector, ele.html());
 		}
 		return map;
 

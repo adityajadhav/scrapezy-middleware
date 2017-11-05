@@ -8,14 +8,36 @@ myApp
 						'$http',
 						function($scope, $resource, $uibModal, $http) {
 
+							console.log(window.location);
+
+							var findGetParameter = function(parameterName) {
+								var result = null, tmp = [];
+								location.search
+										.substr(1)
+										.split("&")
+										.forEach(
+												function(item) {
+													tmp = item.split("=");
+													if (tmp[0] === parameterName)
+														result = decodeURIComponent(tmp[1]);
+												});
+								return result;
+							}
+
+							var t = findGetParameter("tokens");
+
+							var u = findGetParameter("url");
+
 							var me = this;
-							$scope.title = 'Scrapit';
+							$scope.title = 'scrapezy';
 
-							$scope.url = "http://www.bloomberg.com/quote/SPX:IND";
+							$scope.url = u !== null ? u
+									: "http://www.bloomberg.com/quote/SPX:IND";
 
-							$scope.tokerns = "div.price,div.ticker";
+							$scope.tokerns = t !== null ? t
+									: "div.price,div.ticker";
 
-							$scope.cmModel = "{ \n \"name\" : \"div.ticker\",\n \"price\": \"div.price\"\n}";
+							$scope.cmModel = "{ \n \"title\": \"My customized API\",\n \"name\" : \"div.ticker\",\n \"price\": \"div.price\"\n}";
 
 							$scope.editorOptions = {
 								lineNumbers : true,
@@ -41,9 +63,13 @@ myApp
 													var modalInstance = $uibModal
 															.open({
 																templateUrl : 'apikey-modal.html',
+																controller : 'ModalCtrl',
 																resolve : {
-																	user : function() {
-																		return $scope.profile;
+																	uri : function() {
+																		return response.data.uri;
+																	},
+																	base : function() {
+																		return response.data.base;
 																	}
 																}
 															});

@@ -8,7 +8,7 @@ var myApp = angular.module(
 .config(function($stateProvider, $locationProvider) {
 	$stateProvider.state({
 		name : 'home',
-		url : '/',
+		url : '/history',
 		templateUrl : 'home.html',
 		controller : 'HomeCtrl'
 	});

@@ -1,7 +1,11 @@
 <div class="modal-header">
 	<h3 class="modal-title">Generated API</h3>
 </div>
-<div class="modal-body" ng-controller="SettingCtrl">
+<div class="modal-body">
+	<p>Source: {{base}}</p>
+	<a href="{{uri}}" target="_blank"><span style="color: green">{{uri}}</span></a>
+</div>
 
-
+<div class="modal-footer">
+	<button class="btn btn-default" type="button" ng-click="$close()">Close</button>
 </div>
