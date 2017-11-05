@@ -30,8 +30,10 @@ import com.wildhacks.scrapit.repo.ScrapRepository;
 @RequestMapping("api/scrapit")
 public class ScrapItController {
 
-	final static String base = "http://localhost:8080/api/scrapit/";
+	//final static String base = "http://localhost:8080/api/scrapit/";
+	final static String base = "http://ec2-54-162-8-181.compute-1.amazonaws.com:8080/api/scrapit/";
 
+	
 	@Autowired
 	private ScrapItEngine scrapItEngine;
 

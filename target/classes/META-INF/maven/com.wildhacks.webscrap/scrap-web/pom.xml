@@ -8,7 +8,7 @@
 
 
 	<properties>
-		<start-class>com.wildhacks.webscrp.applicatio</start-class>
+		<start-class>com.wildhacks.scrapit.Application</start-class>
 	</properties>
 
 	<dependencies>
